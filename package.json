@@ -1,0 +1,36 @@
+{
+  "name": "@kvass/scroll-anchor",
+  "version": "1.0.0",
+  "description": "Vue component for simple scroll anchors",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kvass-App/scroll-anchor.git"
+  },
+  "keywords": [
+    "vue",
+    "component",
+    "kvass",
+    "scroll",
+    "anchor"
+  ],
+  "author": "carsten@kvass.no",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kvass-App/scroll-anchor/issues"
+  },
+  "homepage": "https://github.com/Kvass-App/scroll-anchor#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0",
+    "dotenv-cli": "^4.0.0",
+    "semantic-release-cli": "^5.4.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
