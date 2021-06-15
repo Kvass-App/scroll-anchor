@@ -30,6 +30,10 @@ export default {
   watch: {
     value: 'check',
     type: 'check',
+    $route: {
+      handler: 'check',
+      deep: true,
+    },
   },
   methods: {
     getValue() {
