@@ -39,7 +39,7 @@ export default {
     getValue() {
       switch (this.type) {
         case 'anchor':
-          return window.location.hash.substring(1)
+          return new URL(window.location.href).hash.substring(1)
         case 'path':
           return window.location.pathname
       }
