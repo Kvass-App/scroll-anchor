@@ -57,7 +57,7 @@ export default {
 
 <style lang="scss">
 .scroll-anchor {
-  display: inline-block;
+  display: block;
   position: relative;
   pointer-events: none;
 }
