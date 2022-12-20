@@ -7,6 +7,10 @@
 </template>
 
 <script>
+import mitt from 'mitt'
+const eventBus = mitt()
+export { eventBus }
+
 export default {
   props: {
     value: {
@@ -27,31 +31,56 @@ export default {
       default: () => ({ behavior: 'smooth' }),
     },
   },
-  watch: {
-    value: 'check',
-    type: 'check',
-    $route: {
-      handler: 'check',
-      deep: true,
-    },
-  },
+  // watch: {
+  //   value: 'check',
+  //   type: 'check',
+  //   $route: {
+  //     handler: 'check',
+  //     deep: true,
+  //   },
+  // },
   methods: {
-    getValue() {
+    getValue(event) {
       switch (this.type) {
         case 'anchor':
-          return new URL(window.location.href).hash.substring(1)
+          return event
         case 'path':
           return window.location.pathname
       }
     },
-    check() {
-      if (this.getValue() !== this.value) return
+    // getValueMounted() {
+    //   switch (this.type) {
+    //     case 'anchor':
+    //       return new URL(window.location.href).hash.substring(1)
+    //     case 'path':
+    //       return window.location.pathname
+    //   }
+    // },
+
+    // checkMounted() {
+    //   if (this.getValueMounted() !== this.value) return
+
+    //   setTimeout(() => this.$el.scrollIntoView(this.scrollOptions), this.delay)
+    // },
+    check(event) {
+      if (this.getValue(event) !== this.value) return
+
+      console.log(this.$el)
       setTimeout(() => this.$el.scrollIntoView(this.scrollOptions), this.delay)
+
+      // this.$nextTick(() =>
+      //   setTimeout(() => this.$el.scrollIntoView(this.scrollOptions), this.delay),
+      // )
     },
   },
   mounted() {
-    this.check()
+    eventBus.on('scroll-anchor', evt => {
+      console.log(evt)
+      this.check(evt.charAt(0) === '#' ? evt.substring(1) : evt)
+    })
+    // this.checkMounted()
   },
+  created() {},
 }
 </script>
 
