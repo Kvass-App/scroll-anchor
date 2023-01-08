@@ -31,56 +31,27 @@ export default {
       default: () => ({ behavior: 'smooth' }),
     },
   },
-  // watch: {
-  //   value: 'check',
-  //   type: 'check',
-  //   $route: {
-  //     handler: 'check',
-  //     deep: true,
-  //   },
-  // },
   methods: {
-    getValue(event) {
+    getValue() {
       switch (this.type) {
         case 'anchor':
-          return event
+          return new URL(window.location.href).hash.substring(1)
         case 'path':
           return window.location.pathname
       }
     },
-    // getValueMounted() {
-    //   switch (this.type) {
-    //     case 'anchor':
-    //       return new URL(window.location.href).hash.substring(1)
-    //     case 'path':
-    //       return window.location.pathname
-    //   }
-    // },
-
-    // checkMounted() {
-    //   if (this.getValueMounted() !== this.value) return
-
-    //   setTimeout(() => this.$el.scrollIntoView(this.scrollOptions), this.delay)
-    // },
-    check(event) {
-      if (this.getValue(event) !== this.value) return
-
-      console.log(this.$el)
+    check() {
+      if (this.getValue() !== this.value) return
       setTimeout(() => this.$el.scrollIntoView(this.scrollOptions), this.delay)
-
-      // this.$nextTick(() =>
-      //   setTimeout(() => this.$el.scrollIntoView(this.scrollOptions), this.delay),
-      // )
     },
   },
   mounted() {
-    eventBus.on('scroll-anchor', evt => {
-      console.log(evt)
-      this.check(evt.charAt(0) === '#' ? evt.substring(1) : evt)
+    this.check()
+    eventBus.on('scroll-anchor:update', hash => {
+      if (!hash) return
+      return this.check(hash.charAt(0) === '#' ? hash.substring(1) : hash)
     })
-    // this.checkMounted()
   },
-  created() {},
 }
 </script>
 
