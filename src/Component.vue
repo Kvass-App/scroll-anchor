@@ -7,6 +7,11 @@
 </template>
 
 <script>
+import mitt from 'mitt'
+const eventBus = mitt()
+
+export { eventBus }
+
 export default {
   props: {
     value: {
@@ -27,14 +32,6 @@ export default {
       default: () => ({ behavior: 'smooth' }),
     },
   },
-  watch: {
-    value: 'check',
-    type: 'check',
-    $route: {
-      handler: 'check',
-      deep: true,
-    },
-  },
   methods: {
     getValue() {
       switch (this.type) {
@@ -51,6 +48,12 @@ export default {
   },
   mounted() {
     this.check()
+    if (this.type === 'anchor') {
+      eventBus.on('scroll-anchor:update', hash => {
+        if (!hash) return
+        return this.check(hash.charAt(0) === '#' ? hash.substring(1) : hash)
+      })
+    }
   },
 }
 </script>
