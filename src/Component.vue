@@ -9,6 +9,7 @@
 <script>
 import mitt from 'mitt'
 const eventBus = mitt()
+
 export { eventBus }
 
 export default {
@@ -47,10 +48,12 @@ export default {
   },
   mounted() {
     this.check()
-    eventBus.on('scroll-anchor:update', hash => {
-      if (!hash) return
-      return this.check(hash.charAt(0) === '#' ? hash.substring(1) : hash)
-    })
+    if (this.type === 'anchor') {
+      eventBus.on('scroll-anchor:update', hash => {
+        if (!hash) return
+        return this.check(hash.charAt(0) === '#' ? hash.substring(1) : hash)
+      })
+    }
   },
 }
 </script>
